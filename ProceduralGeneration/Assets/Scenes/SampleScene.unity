@@ -151,9 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db155f27100bd240a9eb9d360b7e491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
-  _pathHeight: 0
-  _pathWidth: 0
+  _pathHeight: 3
+  _pathWidth: 2
+  _offset: 1.1
+  _panel: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _pivotPoint: {fileID: 218002200}
 --- !u!4 &89038606
 Transform:
@@ -749,6 +750,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 89038605}
         m_TargetAssemblyTypeName: NodeGenerator, Assembly-CSharp
+        m_MethodName: DestroyPanels
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 89038605}
+        m_TargetAssemblyTypeName: NodeGenerator, Assembly-CSharp
         m_MethodName: GenerateGrid
         m_Mode: 1
         m_Arguments:
@@ -1071,8 +1084,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 89038606}
-  - {fileID: 218002201}
-  - {fileID: 355985977}
-  - {fileID: 1247159913}
   - {fileID: 748053524}
+  - {fileID: 1247159913}
+  - {fileID: 218002201}
+  - {fileID: 89038606}
+  - {fileID: 355985977}
