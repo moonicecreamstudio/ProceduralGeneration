@@ -154,9 +154,10 @@ MonoBehaviour:
   _pathHeight: 14
   _pathWidth: 7
   _offset: 1.1
-  _numberOfPaths: 1
+  _numberOfPaths: 3
   _node: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _pivotPoint: {fileID: 218002200}
+  _lineRenderer: {fileID: 3102931769134756487, guid: 588c8331fbf11b64bb2ed867e70ef1d5, type: 3}
 --- !u!4 &89038606
 Transform:
   m_ObjectHideFlags: 0
@@ -436,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 355985973}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.83}
+  m_LocalPosition: {x: 0, y: -0.3, z: -1.83}
   m_LocalScale: {x: 1.048686, y: 1, z: 2.4352}
   m_ConstrainProportionsScale: 0
   m_Children: []

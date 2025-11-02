@@ -13,6 +13,7 @@ public class NodeGenerator : MonoBehaviour
     [Header("References")]
     public GameObject _node; // Visually show the grid
     public GameObject _pivotPoint; // Starting point
+    public LineRenderer _lineRenderer;
 
     // Index starts at 0, so subtract 1
     // Should try and find a way to standarize this, otherwise it will get confusing
@@ -82,8 +83,21 @@ public class NodeGenerator : MonoBehaviour
             }
         }
 
+        // Delete Lines
+        GameObject[] nodesToDestroy = GameObject.FindGameObjectsWithTag("Line");
+
+        foreach (GameObject line in nodesToDestroy)
+        {
+            Destroy(line);
+        }
+
+        
+
         for (int p = 0; p < _numberOfPaths; p++) // Number of paths to create
         {
+            // Create a list of points for the line renderer
+            List<Vector3> points = new List<Vector3>();
+
             // Random starting position
             int currentX = Random.Range(0, _pathWidth);
 
@@ -102,11 +116,25 @@ public class NodeGenerator : MonoBehaviour
                         rend.material.color = Color.red;
                 }
 
+                // Add point
+                points.Add(new Vector3(node.transform.position.x, node.transform.position.y, node.transform.position.z));
+
                 // Choose the next path to be on the left, middle or right of the previous node.
                 int direction = Random.Range(-1, 2);
                 currentX += direction;
             }
+        
+        // Set position for the line renderer
+
+        _lineRenderer.positionCount = points.Count;
+
+        for (int l = 0; l < points.Count; l++)
+        {
+            _lineRenderer.SetPosition(l, points[l]);
         }
 
+        Instantiate(_lineRenderer, transform);
+
+        }
     }
 }
