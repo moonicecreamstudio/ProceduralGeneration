@@ -66,6 +66,17 @@ public class NodeGenerator : MonoBehaviour
         return _grid[x, z];
     }
 
+    public void DestroyLines()
+    {
+        // Delete Lines
+        GameObject[] nodesToDestroy = GameObject.FindGameObjectsWithTag("Line");
+
+        foreach (GameObject line in nodesToDestroy)
+        {
+            Destroy(line);
+        }
+    }
+
     public void GeneratePath()
     {
         // Reset colors
@@ -82,16 +93,6 @@ public class NodeGenerator : MonoBehaviour
                 }
             }
         }
-
-        // Delete Lines
-        GameObject[] nodesToDestroy = GameObject.FindGameObjectsWithTag("Line");
-
-        foreach (GameObject line in nodesToDestroy)
-        {
-            Destroy(line);
-        }
-
-        
 
         for (int p = 0; p < _numberOfPaths; p++) // Number of paths to create
         {
