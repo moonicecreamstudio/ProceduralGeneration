@@ -7,29 +7,25 @@ public class NodeGenerator : MonoBehaviour
     [Header("Path Grid Parameters")]
     public int _pathHeight;
     public int _pathWidth;
-    public float _offset; // How spaced are the tiles from between each other
+    public float _offset; // How spaced are the nodes from between each other
+    public float _numberOfPaths;
 
     [Header("References")]
-    public GameObject _panel; // Visually show the grid
+    public GameObject _node; // Visually show the grid
     public GameObject _pivotPoint; // Starting point
 
-    void Start()
-    {
-        float xPivot = _pivotPoint.transform.position.x;
-    }
+    // Index starts at 0, so subtract 1
+    // Should try and find a way to standarize this, otherwise it will get confusing
+    private GameObject[,] _grid; // 2D array to store nodes
 
-    void Update()
-    {
-        
-    }
     // Destroy the grid
-    public void DestroyPanels()
+    public void DestroyNode()
     {
-        GameObject[] panelsToDestroy = GameObject.FindGameObjectsWithTag("Panel");
+        GameObject[] nodesToDestroy = GameObject.FindGameObjectsWithTag("Node");
 
-        foreach (GameObject panel in panelsToDestroy)
+        foreach (GameObject node in nodesToDestroy)
         {
-            Destroy(panel);
+            Destroy(node);
         }
     }
 
@@ -37,8 +33,8 @@ public class NodeGenerator : MonoBehaviour
     public void GenerateGrid()
     {
         Debug.Log("Generating grid...");
-        //Instantiate(_panel, _pivotPoint.transform);
-        Debug.Log(_panel.transform.localScale.x);
+
+        _grid = new GameObject[_pathWidth, _pathHeight]; // Initialize grid
 
         // Centering
         float totalWidth = (_pathWidth - 1) * _offset;
@@ -50,13 +46,67 @@ public class NodeGenerator : MonoBehaviour
             {
                 Vector3 spawnPos = new Vector3(startX + x * _offset, 
                                                _pivotPoint.transform.position.y,
-                                               _pivotPoint.transform.position.z + z * _offset);
+                                               _pivotPoint.transform.position.z + z * (_offset * 2));
 
-                var spawnedTile = Instantiate(_panel, spawnPos, Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {z}";
+                var spawnedNode = Instantiate(_node, spawnPos, Quaternion.identity);
+                spawnedNode.name = $"Node {x} {z}";
+
+                _grid[x, z] = spawnedNode; // Store in array
             }
         }
         Debug.Log("Generation complete.");
     }
 
+    public GameObject GetNode(int x, int z)
+    {
+        if (x < 0 || x >= _pathWidth || z < 0 || z >= _pathHeight)
+            return null;
+
+        return _grid[x, z];
+    }
+
+    public void GeneratePath()
+    {
+        // Reset colors
+        for (int x = 0; x < _pathWidth; x++)
+        {
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                GameObject nodes = GetNode(x, z);
+
+                Renderer rend = nodes.GetComponent<Renderer>();
+                if (rend != null)
+                {
+                    rend.material.color = Color.gray;
+                }
+            }
+        }
+
+        for (int p = 0; p < _numberOfPaths; p++) // Number of paths to create
+        {
+            // Random starting position
+            int currentX = Random.Range(0, _pathWidth);
+
+            // Choose paths
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                // Stay within the grid
+                currentX = Mathf.Clamp(currentX, 0, _pathWidth - 1);
+
+                // Color tile
+                var node = GetNode(currentX, z);
+                if (node != null)
+                {
+                    var rend = node.GetComponent<Renderer>();
+                    if (rend != null)
+                        rend.material.color = Color.red;
+                }
+
+                // Choose the next path to be on the left, middle or right of the previous node.
+                int direction = Random.Range(-1, 2);
+                currentX += direction;
+            }
+        }
+
+    }
 }
