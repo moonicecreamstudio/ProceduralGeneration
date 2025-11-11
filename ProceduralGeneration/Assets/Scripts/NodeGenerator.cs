@@ -18,6 +18,23 @@ public class NodeGenerator : MonoBehaviour
     // Index starts at 0, so subtract 1
     // Should try and find a way to standarize this, otherwise it will get confusing
     private GameObject[,] _grid; // 2D array to store nodes
+    int direction;
+
+    [System.Serializable]
+    public struct NodeDirection { 
+                                  public bool _hasLeftPath;
+                                  public bool _hasMiddlePath;
+                                  public bool _hasRightPath;
+                                  
+                                  public NodeDirection(bool left, bool middle, bool right)
+                                  {
+                                        _hasLeftPath = left;
+                                        _hasMiddlePath = middle;
+                                        _hasRightPath = right;
+                                  }
+                                }
+
+    public NodeDirection[,] boolsDirection;
 
     // Destroy the grid
     public void DestroyNode()
@@ -79,6 +96,8 @@ public class NodeGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
+
+
         // Reset colors
         for (int x = 0; x < _pathWidth; x++)
         {
@@ -121,8 +140,49 @@ public class NodeGenerator : MonoBehaviour
                 points.Add(new Vector3(node.transform.position.x, node.transform.position.y, node.transform.position.z));
 
                 // Choose the next path to be on the left, middle or right of the previous node.
-                int direction = Random.Range(-1, 2);
+                // While clamp does retrain the currentX, need to rethink how to rework the direction
+                boolsDirection = new NodeDirection[_pathWidth, _pathHeight];
+
+                if (currentX == _pathWidth)
+                {
+                    direction = Random.Range(-1, 2);
+                }
+
+                if (currentX > 0 && currentX < _pathWidth)
+                {
+                    direction = Random.Range(-1, 2);
+                }
+
+                if (currentX == 0)
+                {
+                    direction = Random.Range(-1, 2);
+                }
+
+                // State the possible directions at the end of a node
+                var nodeEndDirection = boolsDirection[currentX, z];
+
+                if (direction == -1) 
+                {
+                    nodeEndDirection._hasLeftPath = true;
+                }
+
+                if (direction == 0)
+                {
+                    nodeEndDirection._hasMiddlePath = true;
+                }
+
+                if (direction == 1)
+                {
+                    nodeEndDirection._hasRightPath = true;
+                }
+                boolsDirection[currentX, z] = nodeEndDirection;
+
+                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasLeftPath);
+                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasMiddlePath);
+                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasRightPath);
                 currentX += direction;
+
+
             }
         
         // Set position for the line renderer
@@ -135,7 +195,6 @@ public class NodeGenerator : MonoBehaviour
         }
 
         Instantiate(_lineRenderer, transform);
-
         }
     }
 }
