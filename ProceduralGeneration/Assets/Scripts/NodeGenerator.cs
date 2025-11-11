@@ -20,18 +20,19 @@ public class NodeGenerator : MonoBehaviour
     private GameObject[,] _grid; // 2D array to store nodes
     int direction;
 
+    // Assign 3 bools on a 2D array
     [System.Serializable]
     public struct NodeDirection { 
-                                  public bool _hasLeftPath;
-                                  public bool _hasMiddlePath;
-                                  public bool _hasRightPath;
+                                      public bool _hasLeftPath;
+                                      public bool _hasMiddlePath;
+                                      public bool _hasRightPath;
                                   
-                                  public NodeDirection(bool left, bool middle, bool right)
-                                  {
-                                        _hasLeftPath = left;
-                                        _hasMiddlePath = middle;
-                                        _hasRightPath = right;
-                                  }
+                                      public NodeDirection(bool left, bool middle, bool right)
+                                      {
+                                            _hasLeftPath = left;
+                                            _hasMiddlePath = middle;
+                                            _hasRightPath = right;
+                                      }
                                 }
 
     public NodeDirection[,] boolsDirection;
@@ -96,8 +97,6 @@ public class NodeGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
-
-
         // Reset colors
         for (int x = 0; x < _pathWidth; x++)
         {
@@ -113,6 +112,8 @@ public class NodeGenerator : MonoBehaviour
             }
         }
 
+        boolsDirection = new NodeDirection[_pathWidth, _pathHeight];
+
         for (int p = 0; p < _numberOfPaths; p++) // Number of paths to create
         {
             // Create a list of points for the line renderer
@@ -125,7 +126,7 @@ public class NodeGenerator : MonoBehaviour
             for (int z = 0; z < _pathHeight; z++)
             {
                 // Stay within the grid
-                currentX = Mathf.Clamp(currentX, 0, _pathWidth - 1);
+                //currentX = Mathf.Clamp(currentX, 0, _pathWidth - 1);
 
                 // Color tile
                 var node = GetNode(currentX, z);
@@ -139,29 +140,55 @@ public class NodeGenerator : MonoBehaviour
                 // Add point
                 points.Add(new Vector3(node.transform.position.x, node.transform.position.y, node.transform.position.z));
 
+                // State the possible directions at the end of a node
+
+
+
                 // Choose the next path to be on the left, middle or right of the previous node.
                 // While clamp does retrain the currentX, need to rethink how to rework the direction
-                boolsDirection = new NodeDirection[_pathWidth, _pathHeight];
 
-                if (currentX == _pathWidth)
+                // Check the nodes on the left and right
+
+                List<int> viablePathChoice = new List<int> { -1, 0, 1 };
+
+
+                if (currentX > 0)
                 {
-                    direction = Random.Range(-1, 2);
+                    if (boolsDirection[currentX - 1, z]._hasRightPath) // If node beside has a right path, don't generate left path
+                    {
+                        viablePathChoice.Remove(-1);
+                    }
+                }
+                if (currentX == 0) // When node is on the very left, don't generate left
+                {
+                    viablePathChoice.Remove(-1);
                 }
 
-                if (currentX > 0 && currentX < _pathWidth)
+                if (currentX < _pathWidth - 1)
                 {
-                    direction = Random.Range(-1, 2);
+                    if (boolsDirection[currentX + 1, z]._hasLeftPath) // If node beside has a left path, don't generate right path
+                    {
+                        viablePathChoice.Remove(1);
+                    }
+                }
+                if (currentX == _pathWidth - 1) // When node is on the very right, don't generate right
+                {
+                    viablePathChoice.Remove(1);
                 }
 
-                if (currentX == 0)
+
+                if (viablePathChoice.Count == 0)
                 {
-                    direction = Random.Range(-1, 2);
+                    viablePathChoice.Add(0);
                 }
 
-                // State the possible directions at the end of a node
+                int randomIndex = Random.Range(0, viablePathChoice.Count);
+                direction = viablePathChoice[randomIndex];
+                Debug.Log("direction: " + direction);
+
                 var nodeEndDirection = boolsDirection[currentX, z];
 
-                if (direction == -1) 
+                if (direction == -1)
                 {
                     nodeEndDirection._hasLeftPath = true;
                 }

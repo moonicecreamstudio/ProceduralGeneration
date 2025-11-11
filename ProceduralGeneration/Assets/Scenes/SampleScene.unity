@@ -154,7 +154,7 @@ MonoBehaviour:
   _pathHeight: 14
   _pathWidth: 7
   _offset: 1.1
-  _numberOfPaths: 3
+  _numberOfPaths: 5
   _node: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _pivotPoint: {fileID: 218002200}
   _lineRenderer: {fileID: 3102931769134756487, guid: 588c8331fbf11b64bb2ed867e70ef1d5, type: 3}
