@@ -37,6 +37,8 @@ public class NodeGenerator : MonoBehaviour
 
     public NodeDirection[,] boolsDirection;
 
+    public int[,] nodeType;
+
     // Destroy the grid
     public void DestroyNode()
     {
@@ -208,8 +210,6 @@ public class NodeGenerator : MonoBehaviour
                 Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasMiddlePath);
                 Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasRightPath);
                 currentX += direction;
-
-
             }
         
         // Set position for the line renderer
@@ -224,4 +224,16 @@ public class NodeGenerator : MonoBehaviour
         Instantiate(_lineRenderer, transform);
         }
     }
+
+    public void GenerateNodeTypes()
+    {
+        for (int x = 0; x < _pathWidth; x++)
+        {
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                Debug.Log(_grid[x, z]);
+            }
+        }
+    }
+
 }
