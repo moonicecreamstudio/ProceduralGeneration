@@ -409,6 +409,9 @@ MonoBehaviour:
     _nodeID: 6
     _nodeSpawnChance: 0
   _nodeIcon: {fileID: 152531690283929799, guid: bbb413026281020439bbd80500731f88, type: 3}
+  rulesList:
+  - _nodeID: 1
+    _row: 0
 --- !u!4 &89038606
 Transform:
   m_ObjectHideFlags: 0

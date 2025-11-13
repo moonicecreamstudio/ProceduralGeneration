@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NodeGenerator : MonoBehaviour
@@ -53,6 +54,14 @@ public class NodeGenerator : MonoBehaviour
 
     public int[,] _nodeType;
     public GameObject _nodeIcon;
+
+    [System.Serializable]
+    public class SpecialRules
+    {
+        public int _nodeID;
+        public int _row;
+    }
+    public SpecialRules[] rulesList;
 
     // Destroy the grid
     public void DestroyNode()
@@ -286,12 +295,22 @@ public class NodeGenerator : MonoBehaviour
                     // Roll for the chance of all the nodes
                     float roll = Random.Range(0, totalWeight);
                     float cumulativeWeight = 0;
-                    for (int j = 0; j < nodeList.Length; j++)
+                    for (int j = 0; j < nodeList.Length; j++) 
                     {
                         cumulativeWeight += nodeList[j]._nodeSpawnChance;
-                        if (roll < cumulativeWeight)
+                        if (roll < cumulativeWeight) // Check until you hit the Node's chance
                         {
                             _nodeType[x, z] = nodeList[j]._nodeID;
+
+                            // Look for all special rules
+                            for (int k = 0; k < rulesList.Length; k++)
+                            {
+                                if (z == rulesList[k]._row) // Matches row
+                                {
+                                    _nodeType[x, z] = rulesList[k]._nodeID; // Override
+                                }
+                            }
+
                             var node = GetNode(x, z);
 
                             // Instantiate icon
@@ -326,6 +345,7 @@ public class NodeGenerator : MonoBehaviour
                         }
                     }
                 }
+
                 Debug.Log("(" + x + ", " + z + ") " + "node type: " + _nodeType[x, z]);
             }
         }
