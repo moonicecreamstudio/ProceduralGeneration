@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pathHeight: 14
   _pathWidth: 7
-  _offset: 1.6
+  _offset: 2
   _numberOfPaths: 8
   _panel: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _node: {fileID: 7930067366495841338, guid: 5171210030bab8c4d97f8367be14378e, type: 3}
@@ -608,7 +608,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1.83}
-  m_LocalScale: {x: 2.24, y: 1, z: 8}
+  m_LocalScale: {x: 6.329568, y: 1, z: 17.6664}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1665,7 +1665,7 @@ Transform:
   m_GameObject: {fileID: 1754985479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.56, z: -4.63}
+  m_LocalPosition: {x: 0, y: 6.89, z: -6.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

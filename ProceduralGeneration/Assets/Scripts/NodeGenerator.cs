@@ -177,7 +177,7 @@ public class NodeGenerator : MonoBehaviour
                             var rend = child.GetComponent<Renderer>();
                             if (rend != null)
                             {
-                                rend.material.color = Color.red;
+                                rend.material.color = Color.white;
                             }
                             break;
                         }
@@ -306,13 +306,17 @@ public class NodeGenerator : MonoBehaviour
                                 {
                                     iconTransform = child;
                                     IconBobbler iconBobbler;
+                                    SpriteRenderer iconSprite;
 
+                                    iconSprite = iconTransform.GetComponent<SpriteRenderer>();
                                     iconBobbler = iconTransform.GetComponent<IconBobbler>();
 
                                     // Change the "starting position" of the icon, which is varied by the z position of the node
                                     // "5" is the highest peak, before going back
                                     iconBobbler._current = 1f - Mathf.Abs(z - 5) / 5f;
 
+                                    // Change sprite to match it's ID
+                                    iconSprite.sprite = iconBobbler._spriteList[_nodeType[x, z]];
                                     break;
                                 }
                             }

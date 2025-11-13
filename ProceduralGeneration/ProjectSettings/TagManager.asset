@@ -7,6 +7,7 @@ TagManager:
   - Node
   - Line
   - NodeColor
+  - Icon
   layers:
   - Default
   - TransparentFX

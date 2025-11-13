@@ -12,6 +12,8 @@ public class IconBobbler : MonoBehaviour
     public GameObject _icon;
     public float _current, _target;
 
+    public Sprite[] _spriteList;
+
     // Start is called before the first frame update
     void Start()
     {
