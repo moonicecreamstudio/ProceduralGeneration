@@ -18,26 +18,39 @@ public class NodeGenerator : MonoBehaviour
     // Index starts at 0, so subtract 1
     // Should try and find a way to standarize this, otherwise it will get confusing
     private GameObject[,] _grid; // 2D array to store nodes
-    int direction;
+    private int direction;
+
+    // Node IDs
+    [System.Serializable]
+    public class NodeParameter 
+    {
+        public string _nodeName;
+        public int _nodeID;
+        public float _nodeSpawnChance;
+    }
+
+    public NodeParameter[] nodeList;
+
 
     // Assign 3 bools on a 2D array
     [System.Serializable]
-    public struct NodeDirection { 
-                                      public bool _hasLeftPath;
-                                      public bool _hasMiddlePath;
-                                      public bool _hasRightPath;
+    public struct NodeDirection
+    { 
+        public bool _hasLeftPath;
+        public bool _hasMiddlePath;
+        public bool _hasRightPath;
                                   
-                                      public NodeDirection(bool left, bool middle, bool right)
-                                      {
-                                            _hasLeftPath = left;
-                                            _hasMiddlePath = middle;
-                                            _hasRightPath = right;
-                                      }
-                                }
+        public NodeDirection(bool left, bool middle, bool right)
+        {
+            _hasLeftPath = left;
+            _hasMiddlePath = middle;
+            _hasRightPath = right;
+        }
+    }
 
     public NodeDirection[,] boolsDirection;
 
-    public int[,] nodeType;
+    public int[,] _nodeType;
 
     // Destroy the grid
     public void DestroyNode()
@@ -56,6 +69,7 @@ public class NodeGenerator : MonoBehaviour
         Debug.Log("Generating grid...");
 
         _grid = new GameObject[_pathWidth, _pathHeight]; // Initialize grid
+        _nodeType = new int[_pathWidth, _pathHeight];
 
         // Centering
         float totalWidth = (_pathWidth - 1) * _offset;
@@ -73,6 +87,7 @@ public class NodeGenerator : MonoBehaviour
                 spawnedNode.name = $"Node {x} {z}";
 
                 _grid[x, z] = spawnedNode; // Store in array
+                _nodeType[x, z] = nodeList[0]._nodeID; // Change all node types to empty nodes
             }
         }
         Debug.Log("Generation complete.");
@@ -81,8 +96,9 @@ public class NodeGenerator : MonoBehaviour
     public GameObject GetNode(int x, int z)
     {
         if (x < 0 || x >= _pathWidth || z < 0 || z >= _pathHeight)
+        {
             return null;
-
+        }
         return _grid[x, z];
     }
 
@@ -144,15 +160,9 @@ public class NodeGenerator : MonoBehaviour
 
                 // State the possible directions at the end of a node
 
-
-
-                // Choose the next path to be on the left, middle or right of the previous node.
-                // While clamp does retrain the currentX, need to rethink how to rework the direction
-
-                // Check the nodes on the left and right
-
                 List<int> viablePathChoice = new List<int> { -1, 0, 1 };
 
+                // Check the nodes on the left and right
 
                 if (currentX > 0)
                 {
@@ -186,7 +196,6 @@ public class NodeGenerator : MonoBehaviour
 
                 int randomIndex = Random.Range(0, viablePathChoice.Count);
                 direction = viablePathChoice[randomIndex];
-                Debug.Log("direction: " + direction);
 
                 var nodeEndDirection = boolsDirection[currentX, z];
 
@@ -206,9 +215,15 @@ public class NodeGenerator : MonoBehaviour
                 }
                 boolsDirection[currentX, z] = nodeEndDirection;
 
-                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasLeftPath);
-                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasMiddlePath);
-                Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasRightPath);
+                // Change nodes in the path to "Battle type"
+                _nodeType[currentX, z] = nodeList[1]._nodeID;
+
+                //Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasLeftPath);
+                //Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasMiddlePath);
+                //Debug.Log("(" + currentX + ", " + z + ") " + boolsDirection[currentX, z]._hasRightPath);
+
+
+                // Choose the next path to be on the left, middle or right of the previous node.
                 currentX += direction;
             }
         
@@ -224,14 +239,35 @@ public class NodeGenerator : MonoBehaviour
         Instantiate(_lineRenderer, transform);
         }
     }
-
     public void GenerateNodeTypes()
     {
         for (int x = 0; x < _pathWidth; x++)
         {
             for (int z = 0; z < _pathHeight; z++)
             {
-                Debug.Log(_grid[x, z]);
+                if (_nodeType[x, z] == nodeList[1]._nodeID) // Look for nodes that have the battle ID
+                {
+                    // Add all the spawn weights in the array
+                    float totalWeight = 0;
+                    for (int i = 0; i < nodeList.Length; i++)
+                    {
+                        totalWeight += nodeList[i]._nodeSpawnChance;
+                    }
+
+                    // Roll for the chance of all the nodes
+                    float roll = Random.Range(0, totalWeight);
+                    float cumulativeWeight = 0;
+                    for (int i = 0; i < nodeList.Length; i++)
+                    {
+                        cumulativeWeight += nodeList[i]._nodeSpawnChance;
+                        if (roll < cumulativeWeight)
+                        {
+                            _nodeType[x, z] = nodeList[i]._nodeID;
+                            break; // Exit out of the loop
+                        }
+                    }
+                }
+                Debug.Log("(" + x + ", " + z + ") " + "node type: " + _nodeType[x, z]);
             }
         }
     }

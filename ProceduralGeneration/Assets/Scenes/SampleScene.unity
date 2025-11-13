@@ -292,6 +292,28 @@ MonoBehaviour:
   _node: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _pivotPoint: {fileID: 218002200}
   _lineRenderer: {fileID: 3102931769134756487, guid: 588c8331fbf11b64bb2ed867e70ef1d5, type: 3}
+  nodeList:
+  - _nodeName: Empty
+    _nodeID: 0
+    _nodeSpawnChance: 0
+  - _nodeName: Battle
+    _nodeID: 1
+    _nodeSpawnChance: 44
+  - _nodeName: Elite
+    _nodeID: 2
+    _nodeSpawnChance: 20
+  - _nodeName: Recruitment
+    _nodeID: 3
+    _nodeSpawnChance: 20
+  - _nodeName: Shop
+    _nodeID: 4
+    _nodeSpawnChance: 10
+  - _nodeName: Rare
+    _nodeID: 5
+    _nodeSpawnChance: 3
+  - _nodeName: Boss
+    _nodeID: 6
+    _nodeSpawnChance: 0
 --- !u!4 &89038606
 Transform:
   m_ObjectHideFlags: 0
