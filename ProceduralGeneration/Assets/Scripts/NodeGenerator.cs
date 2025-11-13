@@ -316,7 +316,9 @@ public class NodeGenerator : MonoBehaviour
                                     iconBobbler._current = 1f - Mathf.Abs(z - 5) / 5f;
 
                                     // Change sprite to match it's ID
+                                    iconSprite.color = iconBobbler._spriteColorList[_nodeType[x, z]];
                                     iconSprite.sprite = iconBobbler._spriteList[_nodeType[x, z]];
+
                                     break;
                                 }
                             }

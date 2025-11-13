@@ -13,6 +13,7 @@ public class IconBobbler : MonoBehaviour
     public float _current, _target;
 
     public Sprite[] _spriteList;
+    public Color[] _spriteColorList;
 
     // Start is called before the first frame update
     void Start()
