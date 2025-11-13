@@ -11,7 +11,8 @@ public class NodeGenerator : MonoBehaviour
     public float _numberOfPaths;
 
     [Header("References")]
-    public GameObject _node; // Visually show the grid
+    public GameObject _panel; // Visually show the grid
+    public GameObject _node;
     public GameObject _pivotPoint; // Starting point
     public LineRenderer _lineRenderer;
 
@@ -122,10 +123,25 @@ public class NodeGenerator : MonoBehaviour
             {
                 GameObject nodes = GetNode(x, z);
 
-                Renderer rend = nodes.GetComponent<Renderer>();
-                if (rend != null)
+                // Color tile
+                var node = GetNode(x, z);
+                if (node != null)
                 {
-                    rend.material.color = Color.gray;
+                    // Loop through node's child objects
+                    for (int i = 0; i < node.transform.childCount; i++)
+                    {
+                        var child = node.transform.GetChild(i);
+
+                        if (child.CompareTag("NodeColor"))
+                        {
+                            var rend = child.GetComponent<Renderer>();
+                            if (rend != null)
+                            {
+                                rend.material.color = Color.gray;
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -150,9 +166,21 @@ public class NodeGenerator : MonoBehaviour
                 var node = GetNode(currentX, z);
                 if (node != null)
                 {
-                    var rend = node.GetComponent<Renderer>();
-                    if (rend != null)
-                        rend.material.color = Color.red;
+                    // Loop through node's child objects
+                    for (int i = 0; i < node.transform.childCount; i++)
+                    {
+                        var child = node.transform.GetChild(i);
+
+                        if (child.CompareTag("NodeColor"))
+                        {
+                            var rend = child.GetComponent<Renderer>();
+                            if (rend != null)
+                            {
+                                rend.material.color = Color.red;
+                            }
+                            break;
+                        }
+                    }
                 }
 
                 // Add point

@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4760929164030185384}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!120 &3102931769134756487
 LineRenderer:
   serializedVersion: 2
@@ -53,7 +53,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 267ec5f2071ae1f47a6f9387a6d66d64, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,20 +75,20 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -1.1000001, y: 0.01, z: -12}
-  - {x: -0.00000011920929, y: 0.01, z: -9.8}
-  - {x: -1.1000001, y: 0.01, z: -7.6}
-  - {x: -1.1000001, y: 0.01, z: -5.3999996}
-  - {x: -2.2000003, y: 0.01, z: -3.1999998}
-  - {x: -2.2000003, y: 0.01, z: -0.99999976}
-  - {x: -2.2000003, y: 0.01, z: 1.2000003}
-  - {x: -2.2000003, y: 0.01, z: 3.4000003}
-  - {x: -2.2000003, y: 0.01, z: 5.6000004}
-  - {x: -2.2000003, y: 0.01, z: 7.8}
-  - {x: -3.3000002, y: 0.01, z: 10}
-  - {x: -3.3000002, y: 0.01, z: 12.200001}
-  - {x: -3.3000002, y: 0.01, z: 14.400001}
-  - {x: -3.3000002, y: 0.01, z: 16.6}
+  - {x: -0.00000011920929, y: 0.01, z: 0}
+  - {x: -0.00000011920929, y: 0.01, z: 3.2}
+  - {x: 1.5999999, y: 0.01, z: 6.4}
+  - {x: -0.00000011920929, y: 0.01, z: 9.6}
+  - {x: -1.6000001, y: 0.01, z: 12.8}
+  - {x: -3.2000003, y: 0.01, z: 16}
+  - {x: -1.6000001, y: 0.01, z: 19.2}
+  - {x: -0.00000011920929, y: 0.01, z: 22.4}
+  - {x: -1.6000001, y: 0.01, z: 25.6}
+  - {x: -1.6000001, y: 0.01, z: 28.800001}
+  - {x: -0.00000011920929, y: 0.01, z: 32}
+  - {x: -0.00000011920929, y: 0.01, z: 35.2}
+  - {x: -1.6000001, y: 0.01, z: 38.4}
+  - {x: -3.2000003, y: 0.01, z: 41.600002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -97,7 +97,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.15686226
+        value: 0.3013707
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -109,8 +109,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.8018868, g: 0.74161184, b: 0.5711552, a: 1}
+      key1: {r: 0.8018868, g: 0.74161184, b: 0.5711552, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -134,13 +134,13 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
-    textureMode: 0
+    alignment: 1
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
