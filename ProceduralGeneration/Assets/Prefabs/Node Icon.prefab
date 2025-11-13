@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6438454631273349311}
   m_Layer: 0
   m_Name: Icon
-  m_TagString: Untagged
+  m_TagString: Icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   _minHeight: {x: 0, y: 0.1, z: 0}
   _speed: 1
   _icon: {fileID: 0}
+  _current: 0
+  _target: 0
 --- !u!1 &4859064160326309060
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,6 +52,7 @@ public class NodeGenerator : MonoBehaviour
     public NodeDirection[,] boolsDirection;
 
     public int[,] _nodeType;
+    public GameObject _nodeIcon;
 
     // Destroy the grid
     public void DestroyNode()
@@ -285,12 +286,36 @@ public class NodeGenerator : MonoBehaviour
                     // Roll for the chance of all the nodes
                     float roll = Random.Range(0, totalWeight);
                     float cumulativeWeight = 0;
-                    for (int i = 0; i < nodeList.Length; i++)
+                    for (int j = 0; j < nodeList.Length; j++)
                     {
-                        cumulativeWeight += nodeList[i]._nodeSpawnChance;
+                        cumulativeWeight += nodeList[j]._nodeSpawnChance;
                         if (roll < cumulativeWeight)
                         {
-                            _nodeType[x, z] = nodeList[i]._nodeID;
+                            _nodeType[x, z] = nodeList[j]._nodeID;
+                            var node = GetNode(x, z);
+
+                            // Instantiate icon
+                            GameObject iconGameObject = Instantiate(_nodeIcon, node.transform);
+                            Transform iconTransform = null;
+
+                            // Get the child with the tag "Icon"
+                            for (int k = 0; k < iconGameObject.transform.childCount; k++)
+                            {
+                                var child = iconGameObject.transform.GetChild(k);
+                                if (child.CompareTag("Icon"))
+                                {
+                                    iconTransform = child;
+                                    IconBobbler iconBobbler;
+
+                                    iconBobbler = iconTransform.GetComponent<IconBobbler>();
+
+                                    // Change the "starting position" of the icon, which is varied by the z position of the node
+                                    // "5" is the highest peak, before going back
+                                    iconBobbler._current = 1f - Mathf.Abs(z - 5) / 5f;
+
+                                    break;
+                                }
+                            }
                             break; // Exit out of the loop
                         }
                     }
