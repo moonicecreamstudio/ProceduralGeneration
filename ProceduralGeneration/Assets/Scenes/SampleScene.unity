@@ -392,13 +392,13 @@ MonoBehaviour:
     _nodeSpawnChance: 0
   - _nodeName: Battle
     _nodeID: 1
-    _nodeSpawnChance: 44
+    _nodeSpawnChance: 50
   - _nodeName: Elite
     _nodeID: 2
-    _nodeSpawnChance: 20
+    _nodeSpawnChance: 10
   - _nodeName: Recruitment
     _nodeID: 3
-    _nodeSpawnChance: 20
+    _nodeSpawnChance: 15
   - _nodeName: Shop
     _nodeID: 4
     _nodeSpawnChance: 10
