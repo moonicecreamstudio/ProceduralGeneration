@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NodeGenerator : MonoBehaviour
@@ -94,8 +93,11 @@ public class NodeGenerator : MonoBehaviour
                                                _pivotPoint.transform.position.y,
                                                _pivotPoint.transform.position.z + z * (_offset * 2));
 
+                // Create the node
                 var spawnedNode = Instantiate(_node, spawnPos, Quaternion.identity);
                 spawnedNode.name = $"Node {x} {z}";
+                NodeController nodeController = spawnedNode.GetComponent<NodeController>();
+                nodeController._nodeGridPosition = new Vector2Int(x, z); // Store the grid position
 
                 _grid[x, z] = spawnedNode; // Store in array
                 _nodeType[x, z] = nodeList[0]._nodeID; // Change all node types to empty nodes

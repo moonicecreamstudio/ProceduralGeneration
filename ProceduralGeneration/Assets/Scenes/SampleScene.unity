@@ -412,6 +412,8 @@ MonoBehaviour:
   rulesList:
   - _nodeID: 1
     _row: 0
+  - _nodeID: 5
+    _row: 6
 --- !u!4 &89038606
 Transform:
   m_ObjectHideFlags: 0
