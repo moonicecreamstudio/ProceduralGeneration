@@ -144,15 +144,15 @@ public class NodeGenerator : MonoBehaviour
                     {
                         var child = node.transform.GetChild(i);
 
-                        if (child.CompareTag("NodeColor"))
-                        {
-                            var rend = child.GetComponent<Renderer>();
-                            if (rend != null)
-                            {
-                                rend.material.color = Color.gray;
-                            }
-                            break;
-                        }
+                        //if (child.CompareTag("NodeColor"))
+                        //{
+                        //    var rend = child.GetComponent<Renderer>();
+                        //    if (rend != null)
+                        //    {
+                        //        rend.material.color = Color.gray;
+                        //    }
+                        //    break;
+                        //}
                     }
                 }
             }
@@ -183,15 +183,15 @@ public class NodeGenerator : MonoBehaviour
                     {
                         var child = node.transform.GetChild(i);
 
-                        if (child.CompareTag("NodeColor"))
-                        {
-                            var rend = child.GetComponent<Renderer>();
-                            if (rend != null)
-                            {
-                                rend.material.color = Color.white;
-                            }
-                            break;
-                        }
+                        //if (child.CompareTag("NodeColor"))
+                        //{
+                        //    var rend = child.GetComponent<Renderer>();
+                        //    if (rend != null)
+                        //    {
+                        //        rend.material.color = Color.white;
+                        //    }
+                        //    break;
+                        //}
                     }
                 }
 
@@ -349,6 +349,43 @@ public class NodeGenerator : MonoBehaviour
                 }
 
                 Debug.Log("(" + x + ", " + z + ") " + "node type: " + _nodeType[x, z]);
+            }
+        }
+    }
+    public void DeleteEmptyNodes()
+    {
+        for (int x = 0; x < _pathWidth; x++)
+        {
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                if (_nodeType[x, z] == nodeList[0]._nodeID) // Look for nodes that have the battle ID
+                {
+                    Destroy(_grid[x,z]);
+                }
+            }
+        }
+    }
+
+    // Set the first row to be the next node
+    public void PlayerStartPosition()
+    {
+        for (int x = 0; x < _pathWidth; x++)
+        {
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                // Skip deleted nodes
+                if (_grid[x, z] == null)
+                {
+                    continue;
+                }
+
+                if (z == 0)
+                {
+                    NodeController nodeController = _grid[x, z].GetComponent<NodeController>();
+                    nodeController._isCurrentLevel = true;
+                    nodeController._nodeRender.material.color = nodeController._colorList[1];
+                }
+
             }
         }
     }

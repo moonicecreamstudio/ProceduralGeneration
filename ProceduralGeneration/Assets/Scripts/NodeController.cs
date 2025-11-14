@@ -12,6 +12,9 @@ public class NodeController : MonoBehaviour
 
     public Vector2Int _nodeGridPosition;
 
+    public bool _isCurrentLevel;
+    public bool _isNextLevel;
+
     void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -27,6 +30,8 @@ public class NodeController : MonoBehaviour
 
         _nodeRender = _nodeColorDisplay.GetComponent<Renderer>();
         _nodeGenerator = GameObject.FindGameObjectWithTag("NodeGeneratorManager").GetComponent<NodeGenerator>();
+
+
     }
 
     void Update()
@@ -36,23 +41,23 @@ public class NodeController : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (_nodeColorDisplay != null)
+        if (_nodeColorDisplay != null && _isCurrentLevel)
         {
-            _nodeRender.material.color = _colorList[1];
+            _nodeRender.material.color = _colorList[2];
         }
     }
 
     void OnMouseExit()
     {
-        if (_nodeColorDisplay != null)
+        if (_nodeColorDisplay != null && _isCurrentLevel)
         {
-            _nodeRender.material.color = _colorList[0];
+            _nodeRender.material.color = _colorList[1];
         }
     }
 
     void OnMouseDown()
     {
-        if (_nodeGridPosition != null)
+        if (_nodeGridPosition != null && _isCurrentLevel)
         {
             Debug.Log(_nodeGenerator._nodeType[_nodeGridPosition.x, _nodeGridPosition.y]);
         }
