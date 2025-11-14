@@ -217,8 +217,9 @@ MonoBehaviour:
   _nodeRender: {fileID: 0}
   _colorList:
   - {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
-  - {r: 0.59560335, g: 1, b: 0.3820755, a: 1}
+  - {r: 0.9433962, g: 0.22694907, b: 0.26815495, a: 1}
   - {r: 1, g: 0.94571984, b: 0.051886797, a: 1}
+  - {r: 0.6659589, g: 0.990566, b: 0.3224012, a: 1}
   _nodeGenerator: {fileID: 0}
   _nodeGridPosition: {x: 0, y: 0}
   _isCurrentLevel: 0

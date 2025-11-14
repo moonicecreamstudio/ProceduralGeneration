@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.iOS;
 using UnityEngine;
 
 public class NodeGenerator : MonoBehaviour
@@ -61,6 +62,9 @@ public class NodeGenerator : MonoBehaviour
         public int _row;
     }
     public SpecialRules[] rulesList;
+
+    public Vector2Int _currentPlayerNode;
+    public int _currentPlayerRow = -1;
 
     // Destroy the grid
     public void DestroyNode()
@@ -382,10 +386,58 @@ public class NodeGenerator : MonoBehaviour
                 if (z == 0)
                 {
                     NodeController nodeController = _grid[x, z].GetComponent<NodeController>();
-                    nodeController._isCurrentLevel = true;
+                    nodeController._isNextLevel = true;
                     nodeController._nodeRender.material.color = nodeController._colorList[1];
                 }
 
+            }
+        }
+    }
+
+    public void GetNextLevels()
+    {
+        // Turn all nodes in the row except for this one, gray
+        _currentPlayerRow += 1;
+
+        for (int x = 0; x < _pathWidth; x++)
+        {
+            for (int z = 0; z < _pathHeight; z++)
+            {
+                // Skip deleted nodes
+                if (_grid[x, z] == null)
+                {
+                    continue;
+                }
+                // Turn off all nodes in this row
+                if (z == _currentPlayerRow)
+                {
+                    NodeController nodeController = _grid[x, z].GetComponent<NodeController>();
+                    nodeController._isNextLevel = false;
+                    nodeController._nodeRender.material.color = nodeController._colorList[0];
+                }
+                // Change color of the completed node
+                NodeController nodeController2 = _grid[_currentPlayerNode.x, _currentPlayerNode.y].GetComponent<NodeController>();
+                nodeController2._nodeRender.material.color = nodeController2._colorList[3];
+
+                // Select the next possible nodes
+                if (boolsDirection[_currentPlayerNode.x, _currentPlayerNode.y]._hasLeftPath)
+                {
+                    NodeController nodeController3 = _grid[_currentPlayerNode.x -1, _currentPlayerNode.y + 1].GetComponent<NodeController>();
+                    nodeController3._isNextLevel = true;
+                    nodeController3._nodeRender.material.color = nodeController3._colorList[1];
+                }
+                if (boolsDirection[_currentPlayerNode.x, _currentPlayerNode.y]._hasMiddlePath)
+                {
+                    NodeController nodeController4 = _grid[_currentPlayerNode.x, _currentPlayerNode.y + 1].GetComponent<NodeController>();
+                    nodeController4._isNextLevel = true;
+                    nodeController4._nodeRender.material.color = nodeController4._colorList[1];
+                }
+                if (boolsDirection[_currentPlayerNode.x, _currentPlayerNode.y]._hasRightPath)
+                {
+                    NodeController nodeController5 = _grid[_currentPlayerNode.x + 1, _currentPlayerNode.y + 1].GetComponent<NodeController>();
+                    nodeController5._isNextLevel = true;
+                    nodeController5._nodeRender.material.color = nodeController5._colorList[1];
+                }
             }
         }
     }

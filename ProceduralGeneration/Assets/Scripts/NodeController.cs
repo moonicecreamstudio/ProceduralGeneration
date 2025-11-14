@@ -41,7 +41,7 @@ public class NodeController : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (_nodeColorDisplay != null && _isCurrentLevel)
+        if (_nodeColorDisplay != null && _isNextLevel)
         {
             _nodeRender.material.color = _colorList[2];
         }
@@ -49,7 +49,7 @@ public class NodeController : MonoBehaviour
 
     void OnMouseExit()
     {
-        if (_nodeColorDisplay != null && _isCurrentLevel)
+        if (_nodeColorDisplay != null && _isNextLevel)
         {
             _nodeRender.material.color = _colorList[1];
         }
@@ -57,9 +57,11 @@ public class NodeController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (_nodeGridPosition != null && _isCurrentLevel)
+        if (_nodeGridPosition != null && _isNextLevel)
         {
             Debug.Log(_nodeGenerator._nodeType[_nodeGridPosition.x, _nodeGridPosition.y]);
+            _nodeGenerator._currentPlayerNode = _nodeGridPosition;
+            _nodeGenerator.GetNextLevels();
         }
     }
 
