@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 89038605}
   m_Layer: 0
   m_Name: NodeGeneratorManager
-  m_TagString: Untagged
+  m_TagString: NodeGeneratorManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1955,6 +1955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 1754985479}
   _moveSpeed: 10
+  _speedUp: 20
 --- !u!1 &1772900596
 GameObject:
   m_ObjectHideFlags: 0
