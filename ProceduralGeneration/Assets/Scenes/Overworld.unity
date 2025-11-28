@@ -519,7 +519,7 @@ MonoBehaviour:
   _panel: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _node: {fileID: 7930067366495841338, guid: 5171210030bab8c4d97f8367be14378e, type: 3}
   _pivotPoint: {fileID: 218002200}
-  _lineRenderer: {fileID: 3102931769134756487, guid: 588c8331fbf11b64bb2ed867e70ef1d5, type: 3}
+  _lineRenderer: {fileID: 5991262663089790665, guid: 98dd79feed83bec42840ab7144c947fc, type: 3}
   nodeList:
   - _nodeName: Empty
     _nodeID: 0
@@ -548,6 +548,8 @@ MonoBehaviour:
     _row: 0
   - _nodeID: 5
     _row: 6
+  _currentPlayerNode: {x: 0, y: 0}
+  _currentPlayerRow: -1
 --- !u!4 &89038606
 Transform:
   m_ObjectHideFlags: 0
@@ -2834,7 +2836,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 27.799988, y: 15.4}
+  m_AnchoredPosition: {x: 27.799988, y: 15.400024}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2063469918
