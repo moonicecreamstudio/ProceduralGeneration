@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.iOS;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeGenerator : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class NodeGenerator : MonoBehaviour
     public GameObject _node;
     public GameObject _pivotPoint; // Starting point
     public LineRenderer _lineRenderer;
+    public TMP_InputField _seedInput;
+
+    public int _seed;
 
     // Index starts at 0, so subtract 1
     // Should try and find a way to standarize this, otherwise it will get confusing
@@ -66,6 +70,20 @@ public class NodeGenerator : MonoBehaviour
     public Vector2Int _currentPlayerNode;
     public int _currentPlayerRow = -1;
 
+    public void Start()
+    {
+        _seed = Random.Range(0, 99999);
+        _seedInput.text = _seed.ToString();
+        
+    }
+
+    // Change the seed
+    public void ChangeSeed()
+    {
+        _seed = int.Parse(_seedInput.text); ;
+    }
+
+
     // Destroy the grid
     public void DestroyNode()
     {
@@ -80,6 +98,7 @@ public class NodeGenerator : MonoBehaviour
     // Generate the grid
     public void GenerateGrid()
     {
+        Random.InitState(_seed);
         Debug.Log("Generating grid...");
 
         _grid = new GameObject[_pathWidth, _pathHeight]; // Initialize grid
@@ -132,6 +151,7 @@ public class NodeGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
+        Random.InitState(_seed);
         // Reset colors
         for (int x = 0; x < _pathWidth; x++)
         {
@@ -285,6 +305,7 @@ public class NodeGenerator : MonoBehaviour
     }
     public void GenerateNodeTypes()
     {
+        Random.InitState(_seed);
         for (int x = 0; x < _pathWidth; x++)
         {
             for (int z = 0; z < _pathHeight; z++)
