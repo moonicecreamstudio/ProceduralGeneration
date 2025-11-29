@@ -516,6 +516,7 @@ MonoBehaviour:
   _pathWidth: 7
   _offset: 2
   _numberOfPaths: 8
+  _extraEndNodes: 2
   _panel: {fileID: 3481998064399937682, guid: 553f38836afae234ebd50678c6792fca, type: 3}
   _node: {fileID: 7930067366495841338, guid: 5171210030bab8c4d97f8367be14378e, type: 3}
   _pivotPoint: {fileID: 218002200}

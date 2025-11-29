@@ -12,6 +12,7 @@ public class NodeGenerator : MonoBehaviour
     public int _pathWidth;
     public float _offset; // How spaced are the nodes from between each other
     public float _numberOfPaths;
+    public float _extraEndNodes;
 
     [Header("References")]
     public GameObject _panel; // Visually show the grid
@@ -108,13 +109,14 @@ public class NodeGenerator : MonoBehaviour
         Random.InitState(_seed);
         Debug.Log("Generating grid...");
 
-        _grid = new GameObject[_pathWidth, _pathHeight]; // Initialize grid
-        _nodeType = new int[_pathWidth, _pathHeight];
+        _grid = new GameObject[_pathWidth, _pathHeight + 2]; // Initialize grid + 2 for the last 2 nodes
+        _nodeType = new int[_pathWidth, _pathHeight + 2];
 
         // Centering
         float totalWidth = (_pathWidth - 1) * _offset;
         float startX = _pivotPoint.transform.position.x - totalWidth / 2;
 
+        // Create nodes in the grid
         for (int x = 0; x < _pathWidth; x++)
         {
             for (int z = 0; z < _pathHeight; z++)
@@ -133,6 +135,28 @@ public class NodeGenerator : MonoBehaviour
                 _nodeType[x, z] = nodeList[0]._nodeID; // Change all node types to empty nodes
             }
         }
+
+
+
+        // Create 2 special nodes at the end.
+
+        for (int e = 0; e < _extraEndNodes; e++)
+        {
+            int zPos = _pathHeight + e;
+
+            Vector3 spawnPos2 = new Vector3(_pivotPoint.transform.position.x,
+                                           _pivotPoint.transform.position.y,
+                                           _pivotPoint.transform.position.z + zPos * (_offset * 2));
+
+            var spawnedNode2 = Instantiate(_node, spawnPos2, Quaternion.identity);
+            spawnedNode2.name = $"Node {0} {zPos}";
+            NodeController nodeController2 = spawnedNode2.GetComponent<NodeController>();
+            nodeController2._nodeGridPosition = new Vector2Int(0, zPos); // Store the grid position
+
+            _grid[0, zPos] = spawnedNode2; // Store in array
+            _nodeType[0, zPos] = nodeList[0]._nodeID; // Change all node types to empty nodes
+        }
+
         Debug.Log("Generation complete.");
     }
 
