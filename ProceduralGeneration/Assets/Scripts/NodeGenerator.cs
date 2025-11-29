@@ -8,11 +8,12 @@ using UnityEngine.UI;
 public class NodeGenerator : MonoBehaviour
 {
     [Header("Path Grid Parameters")]
+    public int _seed;
     public int _pathHeight;
     public int _pathWidth;
     public float _offset; // How spaced are the nodes from between each other
     public float _numberOfPaths;
-    public int _extraEndNodes;
+    private int _extraEndNodes;
 
     [Header("References")]
     public GameObject _panel; // Visually show the grid
@@ -20,15 +21,17 @@ public class NodeGenerator : MonoBehaviour
     public GameObject _pivotPoint; // Starting point
     public LineRenderer _lineRenderer;
     public TMP_InputField _seedInput;
+    public GameObject _nodeIcon;
 
-    public int _seed;
+    [Header("Player Parameters")]
+    public Vector2Int _currentPlayerNode;
+    public int _currentPlayerRow = -1;
 
     // Index starts at 0, so subtract 1
     // Should try and find a way to standarize this, otherwise it will get confusing
     private GameObject[,] _grid; // 2D array to store nodes
     private int direction;
 
-    // Node IDs
     [System.Serializable]
     public class NodeParameter 
     {
@@ -39,6 +42,13 @@ public class NodeGenerator : MonoBehaviour
 
     public NodeParameter[] nodeList;
 
+    [System.Serializable]
+    public class SpecialRules
+    {
+        public int _nodeID;
+        public int _row;
+    }
+    public SpecialRules[] rulesList;
 
     // Assign 3 bools on a 2D array
     [System.Serializable]
@@ -55,28 +65,13 @@ public class NodeGenerator : MonoBehaviour
             _hasRightPath = right;
         }
     }
-
     public NodeDirection[,] boolsDirection;
-
     public int[,] _nodeType;
-    public GameObject _nodeIcon;
-
-    [System.Serializable]
-    public class SpecialRules
-    {
-        public int _nodeID;
-        public int _row;
-    }
-    public SpecialRules[] rulesList;
-
-    public Vector2Int _currentPlayerNode;
-    public int _currentPlayerRow = -1;
 
     public void Start()
     {
         _seed = Random.Range(0, 99999);
         _seedInput.text = _seed.ToString();
-        
     }
 
     // Change the seed
@@ -84,7 +79,6 @@ public class NodeGenerator : MonoBehaviour
     {
         _seed = int.Parse(_seedInput.text);
     }
-
 
     // Destroy the grid
     public void DestroyNode()
@@ -535,7 +529,6 @@ public class NodeGenerator : MonoBehaviour
                     NodeChanger(0, _pathHeight, false, 3);
                     NodeChanger(0, _pathHeight + 1, true, 1);
                 }
-
             }
         }
     }
