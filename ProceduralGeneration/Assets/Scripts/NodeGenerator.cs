@@ -13,7 +13,7 @@ public class NodeGenerator : MonoBehaviour
     public int _pathWidth;
     public float _offset; // How spaced are the nodes from between each other
     public float _numberOfPaths;
-    private int _extraEndNodes;
+    private int _extraEndNodes = 2;
 
     [Header("References")]
     public GameObject _panel; // Visually show the grid
