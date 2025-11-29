@@ -12,7 +12,7 @@ public class NodeGenerator : MonoBehaviour
     public int _pathWidth;
     public float _offset; // How spaced are the nodes from between each other
     public float _numberOfPaths;
-    public float _extraEndNodes;
+    public int _extraEndNodes;
 
     [Header("References")]
     public GameObject _panel; // Visually show the grid
@@ -109,8 +109,8 @@ public class NodeGenerator : MonoBehaviour
         Random.InitState(_seed);
         Debug.Log("Generating grid...");
 
-        _grid = new GameObject[_pathWidth, _pathHeight + 2]; // Initialize grid + 2 for the last 2 nodes
-        _nodeType = new int[_pathWidth, _pathHeight + 2];
+        _grid = new GameObject[_pathWidth, _pathHeight + 3]; // Initialize grid + 3 for the 3 extrade nodes
+        _nodeType = new int[_pathWidth, _pathHeight + 3];
 
         // Centering
         float totalWidth = (_pathWidth - 1) * _offset;
@@ -136,7 +136,21 @@ public class NodeGenerator : MonoBehaviour
             }
         }
 
+        // Create a starting node
 
+        int zPos2 = -1;
+
+        Vector3 spawnPos3 = new Vector3(_pivotPoint.transform.position.x,
+                                       _pivotPoint.transform.position.y,
+                                       _pivotPoint.transform.position.z + zPos2 * (_offset * 2));
+
+        var spawnedNode3 = Instantiate(_node, spawnPos3, Quaternion.identity);
+        spawnedNode3.name = $"Node {0} {zPos2}";
+        NodeController nodeController3 = spawnedNode3.GetComponent<NodeController>();
+        nodeController3._nodeGridPosition = new Vector2Int(0, zPos2); // Store the grid position
+
+        _grid[0, zPos2 + _extraEndNodes + _pathHeight + 1] = spawnedNode3; // Hm, I could change the grids instead of making this node like this
+        _nodeType[0, zPos2 + _extraEndNodes + _pathHeight + 1] = nodeList[0]._nodeID; 
 
         // Create 2 special nodes at the end.
 
