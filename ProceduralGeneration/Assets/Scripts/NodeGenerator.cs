@@ -402,45 +402,60 @@ public class NodeGenerator : MonoBehaviour
                                 }
                             }
 
-                            var node = GetNode(x, z);
-
-                            // Instantiate icon
-                            GameObject iconGameObject = Instantiate(_nodeIcon, node.transform);
-                            Transform iconTransform = null;
-
-                            // Get the child with the tag "Icon"
-                            for (int k = 0; k < iconGameObject.transform.childCount; k++)
-                            {
-                                var child = iconGameObject.transform.GetChild(k);
-                                if (child.CompareTag("Icon"))
-                                {
-                                    iconTransform = child;
-                                    IconBobbler iconBobbler;
-                                    SpriteRenderer iconSprite;
-
-                                    iconSprite = iconTransform.GetComponent<SpriteRenderer>();
-                                    iconBobbler = iconTransform.GetComponent<IconBobbler>();
-
-                                    // Change the "starting position" of the icon, which is varied by the z position of the node
-                                    // "5" is the highest peak, before going back
-                                    iconBobbler._current = 1f - Mathf.Abs(z - 5) / 5f;
-
-                                    // Change sprite to match it's ID
-                                    iconSprite.color = iconBobbler._spriteColorList[_nodeType[x, z]];
-                                    iconSprite.sprite = iconBobbler._spriteList[_nodeType[x, z]];
-
-                                    break;
-                                }
-                            }
+                            InstantiateNodeIcon(x, z);
                             break; // Exit out of the loop
                         }
                     }
                 }
 
-                Debug.Log("(" + x + ", " + z + ") " + "node type: " + _nodeType[x, z]);
+                // Debug.Log("(" + x + ", " + z + ") " + "node type: " + _nodeType[x, z]);
+            }
+        }
+
+        // Starting Node
+        _nodeType[0, _pathHeight + 2] = nodeList[3]._nodeID;
+        InstantiateNodeIcon(0, _pathHeight + 2);
+
+        // 2 End Nodes
+        _nodeType[0, _pathHeight] = nodeList[3]._nodeID;
+        InstantiateNodeIcon(0, _pathHeight);
+
+        _nodeType[0, _pathHeight + 1] = nodeList[6]._nodeID;
+        InstantiateNodeIcon(0, _pathHeight + 1);
+    }
+
+    // Instantiate Icon
+    // I want to try and replace the code in the loop, but some issues arises, will try another time
+    public void InstantiateNodeIcon(int x, int z)
+    {
+        GameObject iconGameObject = Instantiate(_nodeIcon, _grid[x, z].transform);
+        Transform iconTransform = null;
+
+        for (int k = 0; k < iconGameObject.transform.childCount; k++)
+        {
+            var child = iconGameObject.transform.GetChild(k);
+            if (child.CompareTag("Icon"))
+            {
+                iconTransform = child;
+                IconBobbler iconBobbler;
+                SpriteRenderer iconSprite;
+
+                iconSprite = iconTransform.GetComponent<SpriteRenderer>();
+                iconBobbler = iconTransform.GetComponent<IconBobbler>();
+
+                // Change the "starting position" of the icon, which is varied by the z position of the node
+                // "5" is the highest peak, before going back
+                iconBobbler._current = 1f - Mathf.Abs(z - 5) / 5f;
+
+                // Change sprite to match it's ID
+                iconSprite.color = iconBobbler._spriteColorList[_nodeType[x, z]];
+                iconSprite.sprite = iconBobbler._spriteList[_nodeType[x, z]];
+                break;
             }
         }
     }
+
+    // Delete Empty Nodes
     public void DeleteEmptyNodes()
     {
         for (int x = 0; x < _pathWidth; x++)
