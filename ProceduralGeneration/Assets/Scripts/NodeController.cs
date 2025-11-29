@@ -64,5 +64,4 @@ public class NodeController : MonoBehaviour
             _nodeGenerator.GetNextLevels();
         }
     }
-
 }
