@@ -80,7 +80,7 @@ public class NodeGenerator : MonoBehaviour
     // Change the seed
     public void ChangeSeed()
     {
-        _seed = int.Parse(_seedInput.text); ;
+        _seed = int.Parse(_seedInput.text);
     }
 
 
