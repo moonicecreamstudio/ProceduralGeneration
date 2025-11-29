@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -194,6 +193,7 @@ public class NodeGenerator : MonoBehaviour
         }
     }
 
+    // Generate paths connecting between nodes
     public void GeneratePath()
     {
         Random.InitState(_seed);
@@ -335,17 +335,36 @@ public class NodeGenerator : MonoBehaviour
                 // Choose the next path to be on the left, middle or right of the previous node.
                 currentX += direction;
             }
-        
-        // Set position for the line renderer
 
-        _lineRenderer.positionCount = points.Count;
+            // Set position for the line renderer
 
-        for (int l = 0; l < points.Count; l++)
-        {
-            _lineRenderer.SetPosition(l, points[l]);
-        }
+            // Add starting node
+            Vector3 startNode = new Vector3(_pivotPoint.transform.position.x,
+                                            _pivotPoint.transform.position.y,
+                                            _pivotPoint.transform.position.z + (-1) * (_offset * 2));
+            points.Insert(0, startNode);
 
-        Instantiate(_lineRenderer, transform);
+            // Add 2 end nodes
+
+            Vector3 endPoint = new Vector3(_pivotPoint.transform.position.x,
+                                                _pivotPoint.transform.position.y,
+                                                _pivotPoint.transform.position.z + (_pathHeight) * (_offset * 2));
+            Vector3 endPoint2 = new Vector3(_pivotPoint.transform.position.x,
+                                            _pivotPoint.transform.position.y,
+                                            _pivotPoint.transform.position.z + (_pathHeight + 1) * (_offset * 2));
+            points.Add(endPoint);
+            points.Add(endPoint2);
+
+
+
+            _lineRenderer.positionCount = points.Count;
+
+            for (int l = 0; l < points.Count; l++)
+            {
+                _lineRenderer.SetPosition(l, points[l]);
+            }
+
+            var lr = Instantiate(_lineRenderer, transform);
         }
     }
     public void GenerateNodeTypes()
