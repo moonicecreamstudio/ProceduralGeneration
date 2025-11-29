@@ -94,6 +94,12 @@ public class NodeGenerator : MonoBehaviour
             Destroy(node);
         }
     }
+    // Reset player's position on the map
+    public void ResetPlayerPosition()
+    {
+        _currentPlayerNode = new Vector2Int(0,0);
+        _currentPlayerRow = -1;
+    }
 
     // Generate the grid
     public void GenerateGrid()
